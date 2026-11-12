@@ -10,7 +10,7 @@ From the maker of [Akkhara](https://muyleanging.github.io/akkhara-web/), [Chakkh
 and [Sota](https://muyleanging.github.io/sota-web/): Chakkhu reads the text in a picture, Tossana describes the rest.
 
 ## Edit the site
-`index.html` is built from `tools/body.html` (Tossana's content) plus the shared style and scripts of `../sota-web/index.html`:
+`index.html` is built from `tools/body.html` (Tossana's content) plus the shared style and scripts of `~/research/AI/sota-web/index.html`:
 
 ```
 python tools/build.py

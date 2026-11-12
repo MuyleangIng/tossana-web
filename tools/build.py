@@ -10,7 +10,7 @@ import re
 from pathlib import Path
 
 here = Path(__file__).resolve().parent.parent
-sota = (here.parent / "sota-web" / "index.html").read_text(encoding="utf-8")
+sota = (here.parent.parent / "sota-web" / "index.html").read_text(encoding="utf-8")   # ~/research/AI/sota-web
 body = (here / "tools" / "body.html").read_text(encoding="utf-8")
 
 # 1. head + shared CSS: everything up to Sota's own additions block
