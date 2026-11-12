@@ -101,17 +101,10 @@ h1 .km{background:linear-gradient(90deg,var(--blue),var(--green));-webkit-backgr
 
 /* live demo */
 .tryc{max-width:820px}
-.tryrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.tryrow label.btn input{display:none}
-.tog{display:inline-flex;gap:8px;align-items:center;font-size:14px;color:var(--ink2);margin-left:auto;cursor:pointer}
-.btn.rec{background:#dc2626;box-shadow:0 6px 18px rgba(220,38,38,.35)}
-.tryout{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--bg2);font-size:22px;line-height:1.75;min-height:96px;white-space:pre-wrap;word-break:break-word}
-.tryout:empty::before{content:attr(data-empty);color:var(--muted);font-size:15px;font-family:Inter,sans-serif}
-.trymeta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:10px;font-size:13px;color:var(--muted)}
-.trymeta .btn{margin-left:auto}
+.devnote{border-left:4px solid #d97706}
+.devnote h3{margin-top:0}
 .bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:10px;display:none}
 .bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
-@media (max-width:600px){.tog{margin-left:0}.tryrow .btn{flex:1;justify-content:center}}
 
 /* benchmark comparison */
 .bench{margin-top:18px}
@@ -401,6 +394,15 @@ details.tbl th:first-child,details.tbl td:first-child{text-align:left}
 .curve div.best{background:var(--green)}
 .curve div span{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
 .curve-x{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;font-size:11px;color:var(--muted);text-align:center}
+.space-card{padding:0;overflow:hidden}
+.space-card iframe{display:block;width:100%;height:760px;border:0;background:var(--card)}
+@media (max-width:700px){.space-card iframe{height:1100px}}
+.bars{display:grid;gap:10px;margin-top:12px}
+.cbar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;font-size:14px}
+.cbar .tr{height:16px;border-radius:8px;background:var(--bg2);overflow:hidden}
+.cbar .tr i{display:block;height:100%;border-radius:8px;background:color-mix(in srgb,var(--blue) 45%,transparent)}
+.cbar.me .tr i{background:var(--green)}
+.cbar b{text-align:right}
 td.ok{color:var(--green);font-weight:600}
 td.bad{color:var(--bad);font-weight:600}
 </style>
@@ -435,9 +437,10 @@ td.bad{color:var(--bad);font-weight:600}
     <a class="brand" href="#top"><img src="assets/logo.png" alt="">Tossana <span class="km" style="font-weight:600;color:var(--muted);font-size:16px">ទស្សនៈ</span></a>
     <div class="navlinks">
       <a href="#top"><svg class="ic" aria-hidden="true"><use href="#i-house"/></svg><span>Home</span></a>
+      <a href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg><span>Try it</span></a>
       <a href="#why"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg><span class="lbl-x">Why</span></a>
       <a href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg><span>Architecture</span></a>
-      <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><span>Results</span></a>
+      <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><span>Benchmark</span></a>
       <a href="#data"><svg class="ic" aria-hidden="true"><use href="#i-database"/></svg><span class="lbl-x">Data</span></a>
       <a href="#roadmap"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg><span>Roadmap</span></a>
       <a href="#cite"><svg class="ic" aria-hidden="true"><use href="#i-quote"/></svg><span class="lbl-x">Citation</span></a>
@@ -450,14 +453,17 @@ td.bad{color:var(--bad);font-weight:600}
 <div id="mobileMenu" class="glass" role="menu">
   <div class="grp">On this page</div>
   <a href="#top"><svg class="ic" aria-hidden="true"><use href="#i-house"/></svg>Home</a>
+  <a href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try Tossana live</a>
   <a href="#why"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg>Why Khmer captions are hard</a>
   <a href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>Architecture</a>
-  <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>First results</a>
+  <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Benchmark</a>
   <a href="#data"><svg class="ic" aria-hidden="true"><use href="#i-database"/></svg>Data</a>
   <a href="#roadmap"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Roadmap</a>
   <a href="#cite"><svg class="ic" aria-hidden="true"><use href="#i-quote"/></svg>Citation &amp; credits</a>
   <div class="grp">Online</div>
-  <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Tossana model<small>soon</small><svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+  <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Demo Space<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+  <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Tossana model<small>PyTorch</small><svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
+  <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Tossana model<small>ONNX</small><svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
   <a href="https://muyleanging.github.io/sota-web/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg>Sota ASR<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
   <a href="https://muyleanging.github.io/chakkhu-web/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-scan-eye"/></svg>Chakkhu OCR<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
   <a href="https://muyleanging.github.io/akkhara-web/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-keyboard"/></svg>Akkhara keyboard<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
@@ -466,8 +472,9 @@ td.bad{color:var(--bad);font-weight:600}
 
 <nav id="dock" class="glass" aria-label="Quick links">
   <a href="#top" data-sec="top"><svg class="ic" aria-hidden="true"><use href="#i-house"/></svg>Home</a>
+  <a href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try</a>
   <a href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>Model</a>
-  <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Results</a>
+  <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Benchmark</a>
   <a href="#roadmap"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Roadmap</a>
   <button id="menuBtn2" aria-label="More" aria-expanded="false"><svg class="ic" aria-hidden="true"><use href="#i-ellipsis"/></svg>More</button>
 </nav>
@@ -475,15 +482,15 @@ td.bad{color:var(--bad);font-weight:600}
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="pill soon">● In research · English baseline trained, Khmer next</span>
+      <span class="pill">● Preview release · try it live</span>
       <h1>Show a picture.<br>Read it in <span class="km">ខ្មែរ</span>.</h1>
-      <p class="lead">Tossana (<span class="km">ទស្សនៈ</span>, "seeing") will describe photos in Khmer:
-        what is in the picture, who is doing what, and where. Small enough to run on a phone without internet,
-        so it can help people who cannot see the screen, and your photos never leave the device.</p>
+      <p class="lead">Tossana (<span class="km">ទស្សនៈ</span>, "seeing") describes photos in Khmer:
+        what is in the picture, who is doing what, and where. Small enough to run on a phone without internet
+        (36 MB, about 0.2 s per photo on a CPU), so it can help people who cannot see the screen, and your photos never leave the device.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>See the model</a>
-        <a class="btn btn-ghost" href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>First results</a>
-        <a class="btn btn-ghost hide-sm" href="#roadmap"><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>Roadmap</a>
+        <a class="btn btn-primary" href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try it live</a>
+        <a class="btn btn-ghost hide-sm" href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>See the model</a>
+        <a class="btn btn-ghost" href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Benchmark</a>
       </div>
       <div class="trust">
         <span>From the maker of <a href="https://muyleanging.github.io/akkhara-web/" target="_blank" rel="noopener"><b>Akkhara</b></a>,
@@ -504,10 +511,28 @@ td.bad{color:var(--bad);font-weight:600}
       <div class="demo-label" style="margin-top:16px">Tossana writes</div>
       <div class="out km" id="capOut"></div>
       <div class="gloss" id="capGloss"></div>
-      <div class="hint">Preview animation with example sentences, not model output yet.</div>
+      <div class="hint">Preview animation with example sentences. <a href="#try">Try the real model below</a></div>
     </div>
   </div>
 </header>
+
+<section id="try">
+  <div class="wrap">
+    <div class="eyebrow">Try it</div>
+    <h2>Show Tossana a photo</h2>
+    <p class="sub">Upload a photo, take one with your camera, or click an example. The int8 model (36 MB) runs on the CPU of a
+      Hugging Face Space. Preview release: it can name things that are not in the photo.</p>
+    <div class="card space-card">
+      <iframe src="https://muyleanging-tossana-caption-demo.hf.space" title="Tossana Khmer image captioning demo" loading="lazy"
+              allow="camera; clipboard-read; clipboard-write"></iframe>
+    </div>
+    <div class="cta links" style="margin-top:16px">
+      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Open the Space</a>
+      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>PyTorch model</a>
+      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>ONNX model (36 MB)</a>
+    </div>
+  </div>
+</section>
 
 <section id="why" class="alt">
   <div class="wrap">
@@ -543,7 +568,7 @@ td.bad{color:var(--bad);font-weight:600}
           <li><b>Starts from a trained eye.</b> The ViT-S encoder already knows images (ImageNet); only the Khmer writer is learned from scratch.</li>
           <li><b>Whole clusters, not letters.</b> The same 3,402 Khmer cluster tokens as Chakkhu and Sota, so <span class="km">ស្ត្រី</span> is one token and all three share one engine.</li>
           <li><b>Checks itself.</b> A small concept head lists the objects it sees; captions that name anything else are dropped (planned, the main research idea).</li>
-          <li><b>Runs on the phone.</b> Encoder and decoder are exported to int8 ONNX, like Sota; the English test model already runs this way on a laptop CPU.</li>
+          <li><b>Runs on the phone.</b> Encoder and decoder are exported to int8 ONNX (36 MB), like Sota: about 0.2 s per photo on a laptop CPU.</li>
         </ul>
       </div>
       <div class="card">
@@ -563,40 +588,70 @@ td.bad{color:var(--bad);font-weight:600}
 
 <section id="report" class="alt">
   <div class="wrap">
-    <div class="eyebrow">Results · step 1 of the plan</div>
-    <h2>First test: does the pipeline work?</h2>
-    <p class="sub">Before making Khmer data, we trained the same design in <b>English</b> on Flickr8k (6,000 training photos, 5 captions each)
-      and scored it on the 1,000 test photos. <b>These are not Khmer results.</b> Khmer scores come after the Khmer captions are ready.</p>
+    <div class="eyebrow">Benchmark</div>
+    <h2>How good is it?</h2>
+    <p class="sub">Scored on <b>1,910 test photos</b> no model trained on: 1,000 everyday photos (Flickr8k, captions translated to Khmer)
+      and 910 Cambodian scenes (phonsobon's Khmer captions). <b>CIDEr</b>: higher is better, counted on Khmer letter clusters.
+      ⚠️ Test captions are not checked by people yet, so treat these as progress numbers.</p>
     <div class="card"><div class="stats">
-      <div class="stat"><b style="color:var(--green)">65.9</b><span>CIDEr on 1,000 test photos</span></div>
-      <div class="stat"><b>25.5</b><span>BLEU-4</span></div>
-      <div class="stat"><b>43M</b><span>parameters (English test model)</span></div>
-      <div class="stat"><b>1–2 s</b><span>per photo, int8 ONNX on a laptop CPU</span></div>
+      <div class="stat"><b style="color:var(--green)">71.0</b><span>CIDEr on 1,000 everyday photos</span></div>
+      <div class="stat"><b>22.0</b><span>CIDEr on 910 Cambodian scenes (harder: one long caption per photo)</span></div>
+      <div class="stat"><b>36 MB</b><span>int8 ONNX · 32.8M parameters</span></div>
+      <div class="stat"><b>0.2 s</b><span>per photo on a laptop CPU</span></div>
     </div></div>
+
     <div class="grid g2" style="margin-top:18px">
       <div class="card">
-        <h3 style="margin:0 0 4px">CIDEr after each training round</h3>
-        <p class="meta" style="margin:0">500 validation photos. Best after round 3, then the model starts to memorize the training photos.</p>
-        <div class="curve" id="curve"></div>
-        <div class="curve-x" id="curveX"></div>
+        <h3 style="margin:0 0 4px">Each version, same test photos (CIDEr)</h3>
+        <p class="meta" style="margin:0">More and better Khmer data lifts both tests. Exp 2 had almost no everyday photos.</p>
+        <div style="margin-top:12px;font-weight:600;font-size:14px">Everyday photos (1,000)</div>
+        <div class="bars">
+          <div class="cbar"><span>Exp 2 · 19k captions</span><div class="tr"><i style="width:8%"></i></div><b>6.5</b></div>
+          <div class="cbar"><span>Exp 4 · + Flickr8k</span><div class="tr"><i style="width:83%"></i></div><b>66.1</b></div>
+          <div class="cbar me"><span>Exp 5 · + phonsobon v2</span><div class="tr"><i style="width:89%"></i></div><b>71.0</b></div>
+        </div>
+        <div style="margin-top:16px;font-weight:600;font-size:14px">Cambodian scenes never seen in training (691)</div>
+        <div class="bars">
+          <div class="cbar"><span>Exp 4</span><div class="tr"><i style="width:53%"></i></div><b>13.4</b></div>
+          <div class="cbar me"><span>Exp 5 (published)</span><div class="tr"><i style="width:82%"></i></div><b>20.6</b></div>
+        </div>
+        <p class="meta" style="margin:12px 0 0">Bars scaled per test (everyday to 80, Cambodian to 25).</p>
       </div>
       <div class="card">
-        <h3 style="margin:0 0 4px">Captions on new photos (int8 ONNX)</h3>
+        <h3 style="margin:0 0 4px">PyTorch vs ONNX (same 300 photos)</h3>
         <div class="tscroll"><table class="btab">
-          <tr><th>Photo</th><th>Tossana wrote (English test model)</th></tr>
-          <tr><td>a skier on a slope</td><td class="ok">a man skiing down a snowy hill.</td></tr>
-          <tr><td>a woman in a living room</td><td class="ok">a woman is standing in front of a table.</td></tr>
-          <tr><td>two cats on a pink blanket</td><td class="bad">two puppies are laying on a red blanket.</td></tr>
-          <tr><td>children on a tennis court</td><td class="bad">a group of children are standing in a pool.</td></tr>
+          <tr><th>Version</th><th class="sz">Size</th><th>CIDEr</th><th>Same caption as PyTorch</th></tr>
+          <tr><td>PyTorch<small>reference</small></td><td class="sz">131 MB</td><td>54.4</td><td>—</td></tr>
+          <tr><td>ONNX fp32</td><td class="sz">136 MB</td><td>53.4</td><td>94%</td></tr>
+          <tr class="me"><td><b>ONNX int8</b><small>default, phone &amp; web</small></td><td class="sz">36 MB</td><td><b>55.6</b></td><td>45%</td></tr>
         </table></div>
-        <p class="meta" style="margin:10px 0 0">Photos from the COCO validation set, never seen in training. The two mistakes are invented objects:
-          exactly what the planned concept head and guard should stop.</p>
+        <p class="meta" style="margin:10px 0 0">int8 scores the same but picks different words about half the time
+          (<span class="km">ឆ្កែពណ៌ត្នោតធំមួយ…</span> vs <span class="km">ឆ្កែពណ៌ត្នោត…</span>). fp32 matches PyTorch.</p>
+        <h3 style="margin:18px 0 4px">Real captions (example photos)</h3>
+        <div class="tscroll"><table class="btab">
+          <tr><th>Photo</th><th>Tossana wrote</th></tr>
+          <tr><td>white dog on grass</td><td class="ok km">ឆ្កែសកំពុងរត់កាត់ស្មៅ</td></tr>
+          <tr><td>monks on a path</td><td class="ok km">ព្រះសង្ឃមួយក្រុមឈរលើផ្លូវកខ្វក់…</td></tr>
+          <tr><td>boats, Tonle Sap</td><td class="ok km">ទូកមួយក្រុមដែលអណ្តែតលើផ្ទៃទឹក…</td></tr>
+          <tr><td>Bayon temple</td><td class="km">ប្រាសាទអង្គរវត្ត… <small>(right idea, wrong temple)</small></td></tr>
+          <tr><td>girl climbing a stilt house</td><td class="bad km">ឆ្កែពណ៌ខ្មៅ… <small>("a dog": wrong)</small></td></tr>
+        </table></div>
       </div>
     </div>
-    <div class="grid g3" style="margin-top:18px">
-      <div class="card"><h3>What CIDEr means</h3><p>How well a caption uses the words most people chose for that photo; rare, informative words count more. 0 to about 150; higher is better.</p></div>
-      <div class="card"><h3>Is this good?</h3><p>For a small model trained only on Flickr8k, yes: the classic <i>Show, Attend and Tell</i> model reported BLEU-4 ≈ 21 on the same test photos (we get 25.5). Large models trained on far more data score higher.</p></div>
-      <div class="card"><h3>What we will report for Khmer</h3><p>CIDEr and BLEU-4 on Khmer clusters, how often captions name objects that are not there, and size and speed on a phone.</p></div>
+
+    <div class="card" style="margin-top:18px">
+      <h3 style="margin:0 0 4px">All runs</h3>
+      <div class="tscroll"><table class="btab">
+        <tr><th>Run</th><th>Training data</th><th class="sz">Machine</th><th>Everyday CIDEr</th><th>Cambodian CIDEr</th><th>Learned</th></tr>
+        <tr><td>Exp 1<small>English check</small></td><td>Flickr8k (English)</td><td class="sz">Colab T4</td><td>65.9 <small>(English)</small></td><td>—</td><td>pipeline works</td></tr>
+        <tr><td>Exp 2</td><td>phonsobon v1 + news · 19k</td><td class="sz">Mac M4 Pro</td><td>6.5</td><td>—</td><td>news teaches invented places</td></tr>
+        <tr><td>Exp 3</td><td>same, longer training</td><td class="sz">RTX 3060</td><td>—</td><td>—</td><td>more steps alone: no gain</td></tr>
+        <tr><td>Exp 4</td><td>+ Flickr8k, heritage (MADLAD) · 49k</td><td class="sz">RTX 3060</td><td>66.1</td><td>15.0</td><td>more data: no memorizing</td></tr>
+        <tr class="me"><td><b>Exp 5</b><small>published</small></td><td>+ phonsobon v2 · 49k</td><td class="sz">RTX 3090</td><td><b>71.0</b></td><td><b>22.0</b></td><td>more Cambodian data helps</td></tr>
+      </table></div>
+      <p class="meta" style="margin:10px 0 0">Everyday = the same 1,000 Flickr8k test photos for every Khmer run; Cambodian = the 910-photo phonsobon test (from Exp 4 on).
+        Every number: <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener">model card</a>.
+        Training speed: Mac M4 Pro 85, RTX 3060 312, RTX 3090 510 photos per second.</p>
     </div>
   </div>
 </section>
@@ -605,24 +660,27 @@ td.bad{color:var(--bad);font-weight:600}
   <div class="wrap">
     <div class="eyebrow">Data</div>
     <h2>Where the Khmer captions come from</h2>
-    <p class="sub">There is no open Khmer captioning set yet, so we are making one, step by step. Every set is checked for a license before it is used.</p>
+    <p class="sub">There was no open Khmer captioning set big enough, so Tossana combines Khmer sets shared by others with
+      English sets translated to Khmer. <b>None of the Khmer sets states a license yet</b>: research use, with credit.</p>
     <div class="grid g2">
       <div class="card">
-        <h3>Training</h3>
+        <h3>Training (49,053 captions)</h3>
         <table class="cmp data">
-          <tr><td><b>Flickr8k photos and captions</b><small>8,091 photos × 5 English captions (Hodosh et al., 2013)</small></td><td>research only</td></tr>
-          <tr><td><b>Machine translation to Khmer</b><small>NLLB-200 or MADLAD-400, picked by a Khmer speaker on a 50-photo comparison; suspicious translations are flagged</small></td><td>choosing</td></tr>
-          <tr><td><b>More photos later</b><small>Flickr30k / COCO, and captions written by a large vision-language model used as a teacher</small></td><td>planned</td></tr>
-          <tr><td><b>Photos from Cambodia</b><small>markets, temples, streets, food: things English datasets rarely show</small></td><td>planned</td></tr>
+          <tr><td><b>phonsobon v1 + v2</b><small>Khmer descriptions of Cambodian scenes; duplicate photos removed across all splits</small></td><td>2,157</td></tr>
+          <tr><td><b>Flickr8k → Khmer</b><small>everyday photos, translated with MADLAD-400 (chosen over NLLB-200 by a 150-photo comparison)</small></td><td>29,723</td></tr>
+          <tr><td><b>Angkor carvings → Khmer</b><small>Darayut's heritage descriptions, translated and shortened</small></td><td>769</td></tr>
+          <tr><td><b>News photo captions</b><small>rinabuoy; photo credits removed; training only, never scored</small></td><td>16,331</td></tr>
         </table>
       </div>
       <div class="card">
         <h3>Testing (never trained on)</h3>
         <table class="cmp data">
-          <tr><td><b>Flickr8k test, checked by people</b><small>1,000 photos × 2 Khmer captions, every machine translation read and fixed by a Khmer speaker</small></td><td>next</td></tr>
-          <tr><td><b>Invented-object check</b><small>does the caption name objects that are not in the photo?</small></td><td>planned</td></tr>
+          <tr><td><b>Flickr8k test, in Khmer</b><small>1,000 photos × 5 machine-translated captions</small></td><td>1,000</td></tr>
+          <tr><td><b>phonsobon test</b><small>Cambodian scenes; a photo in any test split never reaches training</small></td><td>910</td></tr>
+          <tr><td><b>Checked by people</b><small>2 captions per photo read and fixed by a Khmer speaker</small></td><td>next</td></tr>
         </table>
-        <p class="meta" style="margin:12px 0 0">Tools: the translation and training notebooks will be published with the first Khmer model.</p>
+        <p class="meta" style="margin:12px 0 0">Found while preparing: phonsobon v2 repeats some photos up to 11× across its own train and test
+          splits, and v1 and v2 split the same photos differently. Tossana's rule: a photo belongs to its strictest split everywhere.</p>
       </div>
     </div>
   </div>
@@ -634,12 +692,12 @@ td.bad{color:var(--bad);font-weight:600}
     <h2>Where we are</h2>
     <p class="sub">One step at a time, each with a check before the next.</p>
     <div class="road">
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>Name &amp; design</h3><p>Tossana <span class="km">ទស្សនៈ</span>, the ≈33M design and the architecture figure.</p></div>
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>English test run</h3><p>Same pipeline in English on Flickr8k: CIDEr 65.9, exported to int8 ONNX, ONNX and PyTorch give the same captions.</p></div>
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>Translation tools</h3><p>Notebook that translates captions to Khmer, flags bad ones and prepares a test set for people to check.</p></div>
-      <div class="rstep now"><span class="status st-test">Now</span><h3>Khmer captions</h3><p>Pick the translator, translate Flickr8k, then people check 2,000 test captions.</p></div>
-      <div class="rstep"><span class="status st-soon">Next</span><h3>First Khmer model</h3><p>Train on Khmer clusters, score it, then add the concept head and the guard against invented objects.</p></div>
-      <div class="rstep"><span class="status st-soon">Later</span><h3>In the apps</h3><p>Model on Hugging Face, a web demo, and describing photos together with Chakkhu, offline.</p></div>
+      <div class="rstep done"><span class="status st-ok">Done</span><h3>Design &amp; English check</h3><p>The ≈33M design, then the same pipeline in English: CIDEr 65.9, int8 ONNX works.</p></div>
+      <div class="rstep done"><span class="status st-ok">Done</span><h3>Khmer data</h3><p>49k captions: phonsobon v1 + v2, Flickr8k and Angkor carvings translated with MADLAD-400, news.</p></div>
+      <div class="rstep done"><span class="status st-ok">Done</span><h3>Train &amp; publish</h3><p>Exp 5 on one RTX 3090 (27 min). <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener">PyTorch</a>, <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener">ONNX</a> and <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener">demo</a> are live.</p></div>
+      <div class="rstep now"><span class="status st-test">Now</span><h3>Checked test set</h3><p>A Khmer speaker reads and fixes 2 captions for each test photo, so the scores become final.</p></div>
+      <div class="rstep"><span class="status st-soon">Next</span><h3>Guard against wrong objects</h3><p>A concept head lists what it sees; captions that name anything else are dropped. The main research idea.</p></div>
+      <div class="rstep"><span class="status st-soon">Later</span><h3>In the apps</h3><p>A browser demo like Sota's, and describing photos together with Chakkhu, offline.</p></div>
     </div>
     <div class="family">
       <a href="https://muyleanging.github.io/akkhara-web/" target="_blank" rel="noopener"><b>Akkhara <span class="km">អក្ខរៈ</span></b><small>types: Sing Khmer → Khmer</small></a>
@@ -659,19 +717,22 @@ td.bad{color:var(--bad);font-weight:600}
   author    = {Ing, Muyleang},
   title     = {Tossana: A Small Khmer Image Captioning Model},
   year      = {2026},
-  publisher = {GitHub},
-  url       = {https://muyleanging.github.io/tossana-web/}
+  publisher = {Hugging Face},
+  url       = {https://huggingface.co/muyleanging/Tossana-Caption-Khmer}
 }</pre></div>
-    <p class="meta" style="margin-top:10px">Work in progress: no model is released yet. The license comes with the first release.</p>
+    <p class="meta" style="margin-top:10px">Preview release: personal use, evaluation and research. The final license comes once the data licenses are confirmed.</p>
 
     <div class="card credits">
       <h3>Data, models and methods Tossana builds on</h3>
       <table class="cmp data">
         <tr><th>Source</th><th>License</th></tr>
+        <tr><td><b><a href="https://huggingface.co/datasets/phonsobon/khmer_Images_Captioning" target="_blank" rel="noopener">khmer_Images_Captioning</a> + <a href="https://huggingface.co/datasets/phonsobon/khmer_images_captioning_v2" target="_blank" rel="noopener">v2</a></b><small>phonsobon · Khmer descriptions of Cambodian scenes</small></td><td>not stated</td></tr>
+        <tr><td><b><a href="https://huggingface.co/datasets/rinabuoy/Khmer-Captioning" target="_blank" rel="noopener">Khmer-Captioning</a></b><small>rinabuoy · news photo captions (training only)</small></td><td>not stated</td></tr>
+        <tr><td><b><a href="https://huggingface.co/datasets/Darayut/khmer-historical-heritage-image-captioning" target="_blank" rel="noopener">khmer-historical-heritage-image-captioning</a></b><small>Darayut · Angkor carvings (English, translated)</small></td><td>not stated</td></tr>
         <tr><td><b><a href="https://hockenmaier.cs.illinois.edu/Framing_Image_Description/KCCA.html" target="_blank" rel="noopener">Flickr8k</a></b><small>photos and English captions · Hodosh, Young &amp; Hockenmaier, JAIR 2013</small></td><td>research only</td></tr>
         <tr><td><b><a href="https://huggingface.co/WinKawaks/vit-small-patch16-224" target="_blank" rel="noopener">ViT-S/16</a></b><small>pretrained image encoder · Dosovitskiy et al., ICLR 2021</small></td><td>Apache-2.0</td></tr>
-        <tr><td><b><a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B" target="_blank" rel="noopener">NLLB-200</a></b><small>English → Khmer translation (candidate) · NLLB Team, 2022</small></td><td>CC BY-NC 4.0</td></tr>
-        <tr><td><b><a href="https://huggingface.co/google/madlad400-3b-mt" target="_blank" rel="noopener">MADLAD-400</a></b><small>English → Khmer translation (candidate) · Kudugunta et al., 2023</small></td><td>Apache-2.0</td></tr>
+        <tr><td><b><a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B" target="_blank" rel="noopener">NLLB-200</a></b><small>English → Khmer translation (compared, not used) · NLLB Team, 2022</small></td><td>CC BY-NC 4.0</td></tr>
+        <tr><td><b><a href="https://huggingface.co/google/madlad400-3b-mt" target="_blank" rel="noopener">MADLAD-400</a></b><small>English → Khmer translation (used) · Kudugunta et al., 2023</small></td><td>Apache-2.0</td></tr>
         <tr><td><b>CIDEr · BLEU</b><small>caption scores · Vedantam et al., CVPR 2015 · Papineni et al., ACL 2002</small></td><td>method</td></tr>
       </table>
       <p class="meta" style="margin:12px 0 0">Text normalization (khnormal) and the 3,402 Khmer cluster tokens are shared with <a href="https://muyleanging.github.io/chakkhu-web/" target="_blank" rel="noopener">Chakkhu</a> and <a href="https://muyleanging.github.io/sota-web/" target="_blank" rel="noopener">Sota</a>.</p>
