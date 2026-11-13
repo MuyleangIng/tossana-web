@@ -79,7 +79,7 @@ td.bad{color:var(--bad);font-weight:600}
 <div id="mobileMenu" class="glass" role="menu">
   <div class="grp">On this page</div>
   <a href="#top"><svg class="ic" aria-hidden="true"><use href="#i-house"/></svg>Home</a>
-  <a href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try Tossana live</a>
+  <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try Tossana on Hugging Face</a>
   <a href="#why"><svg class="ic" aria-hidden="true"><use href="#i-languages"/></svg>Why Khmer captions are hard</a>
   <a href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>Architecture</a>
   <a href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Benchmark</a>
@@ -115,7 +115,7 @@ td.bad{color:var(--bad);font-weight:600}
         Small enough to run on a phone without internet (119 MB, about 0.25 s per caption on a CPU), so it can help people who cannot
         see the screen, and your photos never leave the device.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try it live</a>
+        <a class="btn btn-primary" href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try it on Hugging Face</a>
         <a class="btn btn-ghost hide-sm" href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>See the model</a>
         <a class="btn btn-ghost" href="#report"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Benchmark</a>
       </div>
@@ -138,7 +138,7 @@ td.bad{color:var(--bad);font-weight:600}
       <div class="demo-label" style="margin-top:16px">Tossana writes</div>
       <div class="out km" id="capOut"></div>
       <div class="gloss" id="capGloss"></div>
-      <div class="hint">Preview animation with example sentences. <a href="#try">Try the real model below</a></div>
+      <div class="hint">Preview animation with example sentences. <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener">Try the real model on Hugging Face</a></div>
     </div>
   </div>
 </header>
@@ -147,16 +147,13 @@ td.bad{color:var(--bad);font-weight:600}
   <div class="wrap">
     <div class="eyebrow">Try it</div>
     <h2>Show Tossana a photo</h2>
-    <p class="sub">Upload a photo, take one with your camera, or click an example. Choose a <b>short caption</b> or a <b>detailed
-      description</b> (new in v3), and the int8 ONNX model (119 MB, the on-device version) or the full PyTorch model; both run on the CPU
-      of a Hugging Face Space (detailed: ≈5 s with PyTorch, ≈20–30 s with ONNX). Preview release: it can name things that are not in
-      the photo, and the detailed mode can invent details.</p>
-    <div class="card space-card">
-      <iframe src="https://muyleanging-tossana-caption-demo.hf.space" title="Tossana Khmer image captioning demo" loading="lazy"
-              allow="camera; clipboard-read; clipboard-write"></iframe>
+    <p class="sub">Try Tossana on Hugging Face: upload a photo, take one with your camera, or click an example. Choose a
+      <b>short caption</b> or a <b>detailed description</b> (new in v3), and the int8 ONNX model (119 MB, the on-device version)
+      or the full PyTorch model. Preview release: it can name things that are not in the photo, and the detailed mode can invent details.</p>
+    <div class="cta" style="margin-top:16px">
+      <a class="btn btn-primary" href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Try it on Hugging Face<svg class="ic" aria-hidden="true"><use href="#i-external-link"/></svg></a>
     </div>
-    <div class="cta links" style="margin-top:16px">
-      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Open the Space</a>
+    <div class="cta links" style="margin-top:12px">
       <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>PyTorch model</a>
       <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>ONNX model (119 MB)</a>
     </div>
