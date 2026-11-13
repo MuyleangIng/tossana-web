@@ -108,11 +108,12 @@ td.bad{color:var(--bad);font-weight:600}
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="pill">● Preview release · try it live</span>
+      <span class="pill">● v3 · short or detailed · try it live</span>
       <h1>Show a picture.<br>Read it in <span class="km">ខ្មែរ</span>.</h1>
       <p class="lead">Tossana (<span class="km">ទស្សនៈ</span>, "seeing") describes photos in Khmer:
-        what is in the picture, who is doing what, and where. Small enough to run on a phone without internet
-        (102 MB, about 0.2 s per photo on a CPU), so it can help people who cannot see the screen, and your photos never leave the device.</p>
+        what is in the picture, who is doing what, and where, as a <b>short caption</b> or a <b>detailed description</b>.
+        Small enough to run on a phone without internet (119 MB, about 0.25 s per caption on a CPU), so it can help people who cannot
+        see the screen, and your photos never leave the device.</p>
       <div class="cta">
         <a class="btn btn-primary" href="#try"><svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>Try it live</a>
         <a class="btn btn-ghost hide-sm" href="#architecture"><svg class="ic" aria-hidden="true"><use href="#i-cpu"/></svg>See the model</a>
@@ -146,8 +147,10 @@ td.bad{color:var(--bad);font-weight:600}
   <div class="wrap">
     <div class="eyebrow">Try it</div>
     <h2>Show Tossana a photo</h2>
-    <p class="sub">Upload a photo, take one with your camera, or click an example. Choose the int8 ONNX model (102 MB, the on-device version) or the full PyTorch model; both run on the CPU of a
-      Hugging Face Space. Preview release: it can name things that are not in the photo.</p>
+    <p class="sub">Upload a photo, take one with your camera, or click an example. Choose a <b>short caption</b> or a <b>detailed
+      description</b> (new in v3), and the int8 ONNX model (119 MB, the on-device version) or the full PyTorch model; both run on the CPU
+      of a Hugging Face Space (detailed: ≈5 s with PyTorch, ≈20–30 s with ONNX). Preview release: it can name things that are not in
+      the photo, and the detailed mode can invent details.</p>
     <div class="card space-card">
       <iframe src="https://muyleanging-tossana-caption-demo.hf.space" title="Tossana Khmer image captioning demo" loading="lazy"
               allow="camera; clipboard-read; clipboard-write"></iframe>
@@ -155,7 +158,7 @@ td.bad{color:var(--bad);font-weight:600}
     <div class="cta links" style="margin-top:16px">
       <a class="btn btn-ghost btn-sm" href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>Open the Space</a>
       <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>PyTorch model</a>
-      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>ONNX model (102 MB)</a>
+      <a class="btn btn-ghost btn-sm" href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener"><svg class="ic ib" aria-hidden="true"><use href="#b-huggingface"/></svg>ONNX model (119 MB)</a>
     </div>
   </div>
 </section>
@@ -180,11 +183,12 @@ td.bad{color:var(--bad);font-weight:600}
   <div class="wrap">
     <div class="eyebrow">Architecture · the plan</div>
     <h2>A small eye that speaks Khmer</h2>
-    <p class="sub">About <b>104 million</b> parameters: a pretrained SigLIP image encoder, a small decoder that writes Khmer clusters,
-      a fast concept head and a guard against invented objects. It shares Sota's recipe: Khmer clusters as tokens, int8 ONNX, beam search.</p>
+    <p class="sub">About <b>121 million</b> parameters: a pretrained SigLIP image encoder, a decoder that writes Khmer clusters in two
+      lengths (short or detailed), and, planned, a fast concept head and a guard against invented objects. It shares Sota's recipe: Khmer clusters as tokens, int8 ONNX, beam search.</p>
 
     <a class="zoom" href="assets/architecture.png" data-alt="Figure 1. Tossana overview"><img class="figure" src="assets/architecture.png" alt="Figure 1. Tossana overview: image patches, ViT encoder, concept head, caption decoder, beam search with hallucination guard" loading="lazy"></a>
-    <p class="figcap"><b>Figure 1. Design.</b> Patches → image encoder → caption decoder writing Khmer clusters → beam search. The figure shows v1 (ViT-S, d 384); <b>v2 uses a SigLIP-base encoder (12 blocks, d 768) with a 768→384 projection</b> into the same 4-layer decoder. The concept head and guard are planned.</p>
+    <p class="figcap"><b>Figure 1. Design.</b> Patches → image encoder → caption decoder writing Khmer clusters → beam search. The figure shows v1 (ViT-S, d 384); <b>v3 uses a SigLIP-base encoder (12 blocks, d 768) with a 768→512 projection into a 6-layer decoder</b>,
+      and a style token after the start token chooses a short caption or a detailed description. The concept head and guard are planned.</p>
 
     <div class="grid g2" style="margin-top:26px">
       <div class="card">
@@ -193,7 +197,8 @@ td.bad{color:var(--bad);font-weight:600}
           <li><b>Starts from a smart eye.</b> The SigLIP encoder was pretrained on hundreds of millions of image–text pairs, so it already knows cups, screens, temples and hands; only the Khmer writer is learned from scratch. (v1 used ViT-S, which knew only 1,000 ImageNet classes.)</li>
           <li><b>Whole clusters, not letters.</b> The same 3,402 Khmer cluster tokens as Chakkhu and Sota, so <span class="km">ស្ត្រី</span> is one token and all three share one engine.</li>
           <li><b>Checks itself.</b> A small concept head lists the objects it sees; captions that name anything else are dropped (planned, the main research idea).</li>
-          <li><b>Runs on the phone.</b> Encoder and decoder are exported to int8 ONNX (102 MB), like Sota: about 0.2 s per photo on a laptop CPU.</li>
+          <li><b>Short or detailed.</b> One model, two lengths: a token <code>&lt;short&gt;</code> or <code>&lt;detail&gt;</code> after the start tells the decoder whether to write one sentence or 2–4 sentences with colors and positions.</li>
+          <li><b>Runs on the phone.</b> Encoder and decoder are exported to int8 ONNX (119 MB), like Sota: about 0.25 s per short caption on a laptop CPU.</li>
         </ul>
       </div>
       <div class="card">
@@ -203,7 +208,7 @@ td.bad{color:var(--bad);font-weight:600}
           <tr><td><b>Large vision-language model</b><small>Qwen2.5-VL, LLaVA: billions of parameters</small></td><td><span class="status st-bad">too big</span></td></tr>
           <tr><td><b>Fine-tune GIT / BLIP</b><small>English tokenizers, 150M+</small></td><td><span class="status st-test">no Khmer tokens</span></td></tr>
           <tr><td><b>CNN + LSTM</b><small>classic, small</small></td><td><span class="status st-test">weak captions</span></td></tr>
-          <tr class="pick"><td><b>SigLIP + cluster decoder + guard</b><small>our choice, ≈104M</small></td><td><span class="status st-ok">small + Khmer</span></td></tr>
+          <tr class="pick"><td><b>SigLIP + cluster decoder + guard</b><small>our choice, ≈121M</small></td><td><span class="status st-ok">small + Khmer</span></td></tr>
         </table>
         <p class="meta" style="margin:12px 0 0">A large model is still useful: as a teacher that writes more Khmer captions for Tossana to learn from (see the roadmap).</p>
       </div>
@@ -213,73 +218,73 @@ td.bad{color:var(--bad);font-weight:600}
 
 <section id="report" class="alt">
   <div class="wrap">
-    <div class="eyebrow">Benchmark · v2</div>
+    <div class="eyebrow">Benchmark · v3</div>
     <h2>How good is it?</h2>
-    <p class="sub">Scored on <b>2,910 test photos</b> no model trained on: 1,000 objects and indoor scenes (COCO), 1,000 everyday
-      photos (Flickr8k), both with captions translated to Khmer, and 910 Cambodian scenes (phonsobon's Khmer captions).
-      <b>CIDEr</b>: higher is better, counted on Khmer letter clusters. ⚠️ Test captions are not checked by people yet.</p>
+    <p class="sub">Short captions are scored on <b>2,910 test photos</b> no model trained on: 1,000 objects and indoor scenes (COCO),
+      1,000 everyday photos (Flickr8k), both translated to Khmer, and 910 Cambodian scenes (phonsobon). Detailed descriptions are
+      scored on <b>231 DOCCI photos</b> with long human descriptions, translated. <b>CIDEr</b>: higher is better, counted on Khmer
+      letter clusters. ⚠️ Test captions are not checked by people yet.</p>
     <div class="card"><div class="stats">
-      <div class="stat"><b style="color:var(--green)">115.1</b><span>CIDEr on 1,000 object &amp; indoor photos (v1: 42.7)</span></div>
-      <div class="stat"><b style="color:var(--green)">86.9</b><span>CIDEr on 1,000 everyday photos (v1: 71.3)</span></div>
-      <div class="stat"><b>22.0</b><span>CIDEr on 910 Cambodian scenes (v1: 23.4, about the same)</span></div>
-      <div class="stat"><b>102 MB</b><span>int8 ONNX · ≈0.2 s per photo on a CPU</span></div>
+      <div class="stat"><b style="color:var(--green)">116.0</b><span>CIDEr, short captions, 1,000 object &amp; indoor photos (v2: 115.1)</span></div>
+      <div class="stat"><b style="color:var(--green)">88.1</b><span>CIDEr, short captions, 1,000 everyday photos (v2: 86.9)</span></div>
+      <div class="stat"><b style="color:var(--green)">18.6</b><span>CIDEr, detailed descriptions, 231 photos (v2 short captions: 3.1)</span></div>
+      <div class="stat"><b>119 MB</b><span>int8 ONNX · ≈0.25 s per short caption on a CPU</span></div>
     </div></div>
 
     <div class="grid g2" style="margin-top:18px">
       <div class="card">
-        <h3 style="margin:0 0 4px">Each version, same 2,910 test photos (CIDEr)</h3>
-        <p class="meta" style="margin:0">What made it smarter: no news captions, COCO photos, and a SigLIP "eye" pretrained on image–text pairs.</p>
+        <h3 style="margin:0 0 4px">Each version, same 2,910 test photos (short captions, CIDEr)</h3>
+        <p class="meta" style="margin:0">What made it smarter: no news captions, COCO photos, a SigLIP "eye", and in v3 a bigger decoder that also learned long descriptions.</p>
         <div class="bars">
           <div class="cbar"><span>v1 · ViT-S, with news</span><div class="tr"><i style="width:56%"></i></div><b>50.5</b></div>
-          <div class="cbar"><span>no news</span><div class="tr"><i style="width:51%"></i></div><b>46.1</b></div>
           <div class="cbar"><span>+ COCO photos</span><div class="tr"><i style="width:80%"></i></div><b>71.6</b></div>
-          <div class="cbar"><span>+ SigLIP eye</span><div class="tr"><i style="width:91%"></i></div><b>81.5</b></div>
-          <div class="cbar me"><span>v2 · + Cambodian ×4</span><div class="tr"><i style="width:90%"></i></div><b>81.3</b></div>
+          <div class="cbar"><span>v2 · + SigLIP eye</span><div class="tr"><i style="width:90%"></i></div><b>81.3</b></div>
+          <div class="cbar me"><span>v3 · + detailed mode</span><div class="tr"><i style="width:90%"></i></div><b>81.2</b></div>
         </div>
-        <p class="meta" style="margin:12px 0 0">v2 keeps the Cambodian quality (22.0 vs 23.4) while objects and everyday photos jump.
-          Bars scaled to 90.</p>
+        <p class="meta" style="margin:12px 0 0">v3 keeps the short captions at v2's level (81.6 vs 81.1 when the references get the same word fixes)
+          and adds the detailed mode. Cambodian street scenes: 20.3 (v2 22.0). Bars scaled to 90.</p>
       </div>
       <div class="card">
-        <h3 style="margin:0 0 4px">The photo that started it</h3>
-        <p class="meta" style="margin:0">A hand holding a Monster Energy can in front of computer screens.</p>
+        <h3 style="margin:0 0 4px">Short or detailed, one photo</h3>
+        <p class="meta" style="margin:0">An iced coffee in a plastic cup on an office desk (a phone photo, not in training).</p>
         <div class="tscroll"><table class="btab">
           <tr><th>Version</th><th>Tossana wrote</th></tr>
-          <tr><td>v1</td><td class="bad km">ក្រសួងសុខាភិបាលប្រកាស… <small>("Ministry of Health announces…")</small></td></tr>
-          <tr class="me"><td><b>v2</b></td><td class="ok km">នរណាម្នាក់កំពុងកាន់ដបស្រាបៀរនៅមុខម៉ូនីទ័រកុំព្យូទ័រ <small>(someone holding a bottle in front of a computer monitor)</small></td></tr>
+          <tr><td>v2</td><td class="km">ការិយាល័យដែលមានកែវកាហ្វេនៅលើតុ <small>(an office with a coffee cup on the table)</small></td></tr>
+          <tr class="me"><td><b>v3 short</b></td><td class="ok km">កែវប្លាស្ទិកដែលដាក់នៅលើតុស <small>(a plastic cup on a white table)</small></td></tr>
+          <tr class="me"><td><b>v3 detailed</b></td><td class="ok km">រូបថតនេះបង្ហាញពីទិដ្ឋភាពលម្អិតនៃកែវប្លាស្ទិកដែលមានគម្របប្លាស្ទិកច្បាស់លាស់ដែលដាក់លើតុសមួយ… <small>(a close-up of a plastic cup with a clear plastic lid on a white table…)</small></td></tr>
         </table></div>
-        <h3 style="margin:16px 0 4px">Example photos, v1 → v2</h3>
+        <h3 style="margin:16px 0 4px">Still wrong (honest)</h3>
         <div class="tscroll"><table class="btab">
-          <tr><th>Photo</th><th>v2 wrote</th></tr>
-          <tr><td>Bayon temple</td><td class="ok km">មុខប្រាសាទបាយ័នក្នុងក្រុងអង្គរធំ… <small>(v1: "Angkor Wat")</small></td></tr>
-          <tr><td>white dog on grass</td><td class="ok km">ឆ្កែសតូចមួយកំពុងរត់នៅក្នុងស្មៅ</td></tr>
-          <tr><td>boats, Tonle Sap</td><td class="ok km">ទូកតូចមួយនៅលើដងទឹក…</td></tr>
-          <tr><td>monks on a path</td><td class="bad km">បុរសម្នាក់និងស្ត្រីម្នាក់… <small>("a man and a woman": wrong)</small></td></tr>
+          <tr><th>Photo</th><th>v3 wrote</th></tr>
+          <tr><td>Monster Energy can</td><td class="bad km">ដបស្រាបៀរ <small>("beer bottle": brands are not learned yet)</small></td></tr>
+          <tr><td>earbuds case</td><td class="bad km">កាបូប… <small>("a bag…")</small></td></tr>
+          <tr><td>boxes + water packs</td><td class="bad km">…ផ្ទះបាយ… <small>(detailed mode invents "a kitchen")</small></td></tr>
         </table></div>
       </div>
     </div>
 
     <div class="grid g2" style="margin-top:18px">
       <div class="card">
-        <h3 style="margin:0 0 4px">PyTorch vs ONNX (same 300 photos)</h3>
+        <h3 style="margin:0 0 4px">PyTorch vs ONNX (same 300 COCO test photos)</h3>
         <div class="tscroll"><table class="btab">
-          <tr><th>Version</th><th class="sz">Size</th><th>CIDEr</th><th>Same caption as PyTorch</th></tr>
-          <tr><td>PyTorch<small>reference</small></td><td class="sz">417 MB</td><td>86.6</td><td>—</td></tr>
-          <tr><td>ONNX fp32</td><td class="sz">394 MB</td><td>86.0</td><td>94%</td></tr>
-          <tr class="me"><td><b>ONNX int8</b><small>per-channel, phone &amp; web</small></td><td class="sz">102 MB</td><td><b>83.7</b></td><td>58%</td></tr>
+          <tr><th>Version</th><th class="sz">Size</th><th>v2</th><th>v3</th><th>v3 same as PyTorch</th></tr>
+          <tr><td>PyTorch<small>reference</small></td><td class="sz">483 MB</td><td>120.5</td><td><b>126.7</b></td><td>—</td></tr>
+          <tr><td>ONNX fp32</td><td class="sz">462 MB</td><td>120.2</td><td><b>125.6</b></td><td>93%</td></tr>
+          <tr class="me"><td><b>ONNX int8</b><small>per-channel, phone &amp; web</small></td><td class="sz">119 MB</td><td>122.6</td><td><b>124.0</b></td><td>70%</td></tr>
         </table></div>
-        <p class="meta" style="margin:10px 0 0">The demo lets you switch between ONNX int8 and the full PyTorch model.</p>
+        <p class="meta" style="margin:10px 0 0">CIDEr, short captions, beam 5, the same script for both versions.</p>
       </div>
       <div class="card">
         <h3 style="margin:0 0 4px">All runs</h3>
         <div class="tscroll"><table class="btab">
           <tr><th>Run</th><th class="sz">Machine</th><th>COCO</th><th>Everyday</th><th>Cambodian</th></tr>
           <tr><td>v1 (Exp 5)<small>ViT-S 33M, with news</small></td><td class="sz">RTX 3090</td><td>42.7</td><td>71.3</td><td><b>23.4</b></td></tr>
-          <tr><td>Exp 6a<small>no news</small></td><td class="sz">Mac M4 Pro</td><td>41.5</td><td>65.6</td><td>18.3</td></tr>
-          <tr><td>Exp 6b<small>+ COCO</small></td><td class="sz">Mac M4 Pro</td><td>103.7</td><td>76.7</td><td>14.9</td></tr>
+          <tr><td>Exp 6b<small>+ COCO, no news</small></td><td class="sz">Mac M4 Pro</td><td>103.7</td><td>76.7</td><td>14.9</td></tr>
           <tr><td>Exp 7<small>+ SigLIP eye, 104M</small></td><td class="sz">RTX 4090</td><td><b>118.5</b></td><td>85.4</td><td>20.1</td></tr>
-          <tr class="me"><td><b>v2 (Exp 7b)</b><small>+ Cambodian ×4 · published</small></td><td class="sz">RTX 4090</td><td>115.1</td><td><b>86.9</b></td><td>22.0</td></tr>
+          <tr><td>v2 (Exp 7b)<small>+ Cambodian ×4</small></td><td class="sz">RTX 4090</td><td>115.1</td><td>86.9</td><td>22.0</td></tr>
+          <tr class="me"><td><b>v3 (Exp 8)</b><small>+ detailed mode, 121M · published</small></td><td class="sz">RTX 5090</td><td>116.0</td><td><b>88.1</b></td><td>20.3</td></tr>
         </table></div>
-        <p class="meta" style="margin:10px 0 0">Training speed: Mac M4 Pro 89, RTX 4090 (shared) 414–461 photos/s. Every number:
+        <p class="meta" style="margin:10px 0 0">v3 trained in ≈45 min on one rented RTX 5090 (≈650 photos/s). Every number:
           <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener">model card</a>.</p>
       </div>
     </div>
@@ -294,25 +299,25 @@ td.bad{color:var(--bad);font-weight:600}
       English sets translated to Khmer. <b>None of the Khmer sets states a license yet</b>: research use, with credit.</p>
     <div class="grid g2">
       <div class="card">
-        <h3>Training v2 (62,519 caption pairs)</h3>
+        <h3>Short captions (62,519 pairs)</h3>
         <table class="cmp data">
-          <tr><td><b>COCO → Khmer</b><small>15,000 photos × 2: objects, indoor scenes, people holding things (MADLAD-400)</small></td><td>29,870</td></tr>
-          <tr><td><b>Flickr8k → Khmer</b><small>everyday photos (MADLAD-400, chosen over NLLB-200 by a 150-photo comparison)</small></td><td>29,723</td></tr>
+          <tr><td><b>COCO → Khmer</b><small>15,000 photos × 2: objects, indoor scenes (MADLAD-400)</small></td><td>29,870</td></tr>
+          <tr><td><b>Flickr8k → Khmer</b><small>everyday photos (MADLAD-400)</small></td><td>29,723</td></tr>
           <tr><td><b>phonsobon v1 + v2</b><small>Khmer descriptions of Cambodian scenes, shown 4× more often</small></td><td>2,157</td></tr>
-          <tr><td><b>Angkor carvings → Khmer</b><small>Darayut's heritage descriptions, translated, shown 2×</small></td><td>769</td></tr>
-          <tr><td><b>News photo captions</b><small>removed in v2: they made the model write news sentences for unfamiliar photos</small></td><td>—</td></tr>
+          <tr><td><b>Angkor carvings → Khmer</b><small>Darayut's heritage descriptions, shown 2×</small></td><td>769</td></tr>
+          <tr><td><b>Word fixes</b><small>MADLAD mistakes fixed: table → តុ (not តារាង), objects "sit" → ដាក់ (not អង្គុយ)</small></td><td>2,478</td></tr>
         </table>
       </div>
       <div class="card">
-        <h3>Testing (never trained on)</h3>
+        <h3>Detailed descriptions (47,490, new in v3)</h3>
         <table class="cmp data">
-          <tr><td><b>COCO test, in Khmer</b><small>1,000 photos × 5 machine-translated captions</small></td><td>1,000</td></tr>
-          <tr><td><b>Flickr8k test, in Khmer</b><small>1,000 photos × 5 machine-translated captions</small></td><td>1,000</td></tr>
-          <tr><td><b>phonsobon test</b><small>Cambodian scenes; a photo in any test split never reaches training</small></td><td>910</td></tr>
-          <tr><td><b>Checked by people</b><small>2 captions per photo read and fixed by a Khmer speaker</small></td><td>next</td></tr>
+          <tr><td><b>DOCCI</b><small>Google, long descriptions written by people</small></td><td>7,924</td></tr>
+          <tr><td><b>Localized Narratives</b><small>people describing our COCO photos aloud</small></td><td>16,138</td></tr>
+          <tr><td><b>PixMo-Cap</b><small>very detailed descriptions of web photos</small></td><td>15,569</td></tr>
+          <tr><td><b>Qwen2.5-VL teacher</b><small>an open 7B model describing our Cambodian and Flickr8k photos</small></td><td>8,240</td></tr>
         </table>
-        <p class="meta" style="margin:12px 0 0">Found while preparing: phonsobon v2 repeats some photos up to 11× across its own train and test
-          splits, and v1 and v2 split the same photos differently. Tossana's rule: a photo belongs to its strictest split everywhere.</p>
+        <p class="meta" style="margin:12px 0 0">Each cut to ≤ 4 sentences and translated to Khmer sentence by sentence (156,879 sentences).
+          Testing never uses a training photo: a photo belongs to its strictest split everywhere.</p>
       </div>
     </div>
   </div>
@@ -324,19 +329,11 @@ td.bad{color:var(--bad);font-weight:600}
     <h2>Where we are</h2>
     <p class="sub">One step at a time, each with a check before the next.</p>
     <div class="road">
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>v1</h3><p>ViT-S, 33M, Flickr8k + phonsobon + news. Everyday CIDEr 71; wrote news sentences for unfamiliar photos.</p></div>
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>v2 · smarter eye</h3><p>SigLIP encoder, COCO photos, no news, Cambodian ×4: objects 42.7 → 115.1, everyday 71.3 → 86.9.</p></div>
-      <div class="rstep done"><span class="status st-ok">Done</span><h3>Publish v2</h3><p><a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer" target="_blank" rel="noopener">PyTorch</a>, <a href="https://huggingface.co/muyleanging/Tossana-Caption-Khmer-ONNX" target="_blank" rel="noopener">ONNX</a> and the <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener">demo</a> (choose ONNX or PyTorch).</p></div>
-      <div class="rstep now"><span class="status st-test">Now</span><h3>Checked test set</h3><p>A Khmer speaker reads and fixes 2 captions for each test photo, so the scores become final.</p></div>
-      <div class="rstep"><span class="status st-soon">Next</span><h3>More Cambodia, fewer wrong objects</h3><p>More Cambodian photos (teacher model), and a guard that drops captions naming objects it does not see.</p></div>
-      <div class="rstep"><span class="status st-soon">Later</span><h3>In the apps</h3><p>A browser demo like Sota's, and describing photos together with Chakkhu, offline.</p></div>
-    </div>
-    <div class="family">
-      <a href="https://muyleanging.github.io/akkhara-web/" target="_blank" rel="noopener"><b>Akkhara <span class="km">អក្ខរៈ</span></b><small>types: Sing Khmer → Khmer</small></a>
-      <a href="https://muyleanging.github.io/chakkhu-web/" target="_blank" rel="noopener"><b>Chakkhu <span class="km">ចក្ខុ</span></b><small>reads: Khmer OCR</small></a>
-      <a href="https://muyleanging.github.io/sota-web/" target="_blank" rel="noopener"><b>Sota <span class="km">សោតៈ</span></b><small>listens: Khmer ASR</small></a>
-      <a class="me" href="#top"><b>Tossana <span class="km">ទស្សនៈ</span></b><small>sees: Khmer captions</small></a>
-      <a href="https://github.com/MuyleangIng/voxpocket-web" target="_blank" rel="noopener"><b>VoxPocket</b><small>speaks: Khmer TTS</small></a>
+      <div class="rstep done"><span class="status st-ok">Done</span><h3>v1 → v2</h3><p>ViT-S → SigLIP eye, COCO photos, no news: objects 42.7 → 115.1, everyday 71.3 → 86.9.</p></div>
+      <div class="rstep done"><span class="status st-ok">Done</span><h3>v3 · short or detailed</h3><p>A detailed mode (2–4 sentences) from 47k long descriptions; Khmer word fixes. <a href="https://huggingface.co/spaces/muyleanging/Tossana-Caption-Demo" target="_blank" rel="noopener">Try it</a>.</p></div>
+      <div class="rstep now"><span class="status st-test">Next</span><h3>v3.1 · products, brands, text</h3><p>Photos of phones, cans, cups and signs with teacher captions; a sharper 384 px eye or Chakkhu OCR to read logos; a faster ONNX detailed mode.</p></div>
+      <div class="rstep"><span class="status st-soon">Next</span><h3>Fewer invented details</h3><p>A guard that drops descriptions naming objects it does not see, and more real Cambodian photos.</p></div>
+      <div class="rstep"><span class="status st-soon">Later</span><h3>Checked test set · apps</h3><p>A Khmer speaker checks the test captions; a browser demo like Sota's; describing photos together with Chakkhu, offline.</p></div>
     </div>
   </div>
 </section>
@@ -362,8 +359,12 @@ td.bad{color:var(--bad);font-weight:600}
         <tr><td><b><a href="https://huggingface.co/datasets/rinabuoy/Khmer-Captioning" target="_blank" rel="noopener">Khmer-Captioning</a></b><small>rinabuoy · news photo captions (training only)</small></td><td>not stated</td></tr>
         <tr><td><b><a href="https://huggingface.co/datasets/Darayut/khmer-historical-heritage-image-captioning" target="_blank" rel="noopener">khmer-historical-heritage-image-captioning</a></b><small>Darayut · Angkor carvings (English, translated)</small></td><td>not stated</td></tr>
         <tr><td><b><a href="https://hockenmaier.cs.illinois.edu/Framing_Image_Description/KCCA.html" target="_blank" rel="noopener">Flickr8k</a></b><small>photos and English captions · Hodosh, Young &amp; Hockenmaier, JAIR 2013</small></td><td>research only</td></tr>
-        <tr><td><b><a href="https://huggingface.co/google/siglip-base-patch16-224" target="_blank" rel="noopener">SigLIP</a></b><small>image encoder of v2 · Zhai et al., ICCV 2023</small></td><td>Apache-2.0</td></tr>
+        <tr><td><b><a href="https://huggingface.co/google/siglip-base-patch16-224" target="_blank" rel="noopener">SigLIP</a></b><small>image encoder of v2 and v3 · Zhai et al., ICCV 2023</small></td><td>Apache-2.0</td></tr>
         <tr><td><b><a href="https://cocodataset.org" target="_blank" rel="noopener">COCO</a></b><small>photos and English captions (Karpathy split), translated · Lin et al., ECCV 2014</small></td><td>CC BY 4.0</td></tr>
+        <tr><td><b><a href="https://huggingface.co/datasets/google/docci" target="_blank" rel="noopener">DOCCI</a></b><small>long human descriptions, translated (v3 detailed mode) · Onoe et al., ECCV 2024</small></td><td>CC BY 4.0</td></tr>
+        <tr><td><b><a href="https://google.github.io/localized-narratives/" target="_blank" rel="noopener">Localized Narratives</a></b><small>spoken descriptions of COCO photos, translated · Pont-Tuset et al., ECCV 2020</small></td><td>CC BY 4.0</td></tr>
+        <tr><td><b><a href="https://huggingface.co/datasets/allenai/pixmo-cap" target="_blank" rel="noopener">PixMo-Cap</a></b><small>detailed descriptions of web photos, translated · Deitke et al., 2024</small></td><td>ODC-BY</td></tr>
+        <tr><td><b><a href="https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct" target="_blank" rel="noopener">Qwen2.5-VL-7B</a></b><small>teacher: English descriptions of our training photos</small></td><td>Apache-2.0</td></tr>
         <tr><td><b><a href="https://huggingface.co/WinKawaks/vit-small-patch16-224" target="_blank" rel="noopener">ViT-S/16</a></b><small>image encoder of v1 · Dosovitskiy et al., ICLR 2021</small></td><td>Apache-2.0</td></tr>
         <tr><td><b><a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B" target="_blank" rel="noopener">NLLB-200</a></b><small>English → Khmer translation (compared, not used) · NLLB Team, 2022</small></td><td>CC BY-NC 4.0</td></tr>
         <tr><td><b><a href="https://huggingface.co/google/madlad400-3b-mt" target="_blank" rel="noopener">MADLAD-400</a></b><small>English → Khmer translation (used) · Kudugunta et al., 2023</small></td><td>Apache-2.0</td></tr>
